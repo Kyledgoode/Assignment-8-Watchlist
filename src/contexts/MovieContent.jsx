@@ -11,11 +11,18 @@ export function useWatchlist() {
 };
 
 export function MovieProvider({ children }) {
-  const [watchlist, setWatchlist] = useState([]);
+  const [watchlist, setWatchlist] = useState(() => {
+    const saved = localStorage.getItem('watchlist');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+useEffect(() => {
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+  }, [watchlist]);
 
   const addToWatchlist = (movie) => {
     if (!watchlist.some(m => m.id === movie.id)) {
-      setCookList(prev => [...prev, movie]);
+      setWatchlist(prev => [...prev, movie]);
     }
   };
 
