@@ -29,7 +29,7 @@ function MovieCard({ movie }) {
     if (inWatchlist) {
       removeFromWatchlist(movie.id);
     } else {
-      addToWatchlist(movie.id);
+      addToWatchlist(movie);
     }
   }
 
