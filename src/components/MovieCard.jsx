@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useWatchlist } from '../contexts/MovieContent';
 
 function MovieCard({ movie }) {
   const [isFavorite, setFavorite] = useState(false);
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
+  const inWatchlist = isInWatchlist(movie.id);
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
@@ -22,6 +25,14 @@ function MovieCard({ movie }) {
     }
   };
 
+  const handleWatchlistClick = () => {
+    if (inWatchlist) {
+      removeFromWatchlist(movie.id);
+    } else {
+      addToWatchlist(movie.id);
+    }
+  }
+
   return (
     <div className="movie-card">
       <div className="movie-poster">
@@ -39,6 +50,12 @@ function MovieCard({ movie }) {
         <button className="favorite-button" onClick={toggleFavorite}>
           {isFavorite ? 'Remove from Favorites' : '♡ Add to Favorites'}
           </button>
+          <button 
+          className={`watchlist-button ${inWatchlist ? 'added' : ''}`}
+          onClick={handleWatchlistClick}
+        >
+          {inWatchlist ? 'Remove from Watchlist' : '+ Add to Watchlist'}
+        </button>
       </div>
     </div>
   );
