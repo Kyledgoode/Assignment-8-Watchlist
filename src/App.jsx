@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
+import Watchlist from './pages/Watchlist';
 import { MovieProvider } from './contexts/MovieContent';
 import './App.css';
 import { searchMovies } from './services/movieService';
